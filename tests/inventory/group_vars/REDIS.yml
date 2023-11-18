@@ -17,13 +17,13 @@ inv_redis_ports:
 #  - 6380
 #  - 6381
 
-inv_redis_ssl: true
-inv_redis_ssl_domain: "my-redis-server.domain.tld"
-inv_redis_ssl_path: "/etc/redis/ssl"
-inv_redis_ssl_key: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/{{ inv_redis_ssl_domain }}.pem.key"
-inv_redis_ssl_cert: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/{{ inv_redis_ssl_domain }}.pem.crt"
-inv_redis_ssl_ca: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/ca-chain.pem.crt"
-inv_redis_ssl_auth_client: "no"
+#inv_redis_ssl: true
+#inv_redis_ssl_domain: "my-redis-server.domain.tld"
+#inv_redis_ssl_path: "/etc/redis/ssl"
+#inv_redis_ssl_key: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/{{ inv_redis_ssl_domain }}.pem.key"
+#inv_redis_ssl_cert: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/{{ inv_redis_ssl_domain }}.pem.crt"
+#inv_redis_ssl_ca: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/ca-chain.pem.crt"
+#inv_redis_ssl_auth_client: "no"
 
 inv_redis_cert_bundles:
   - name: "My-Local-Ansible-Root-CA.pem.crt"

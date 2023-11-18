@@ -1,1 +1,102 @@
 ---
+inv_install_apache: true
+
+inv_install_apache_https_listen_port: 443
+inv_install_apache_http_listen_port: 80
+
+inv_install_apache_modules:
+  - "ssl"
+  - "rewrite"
+  - "proxy"
+  - "proxy_http"
+  - "ldap"
+  - "authnz_ldap"
+  - "filter"
+  - "deflate"
+  - "headers"
+  - "proxy_wstunnel"
+  - "proxy_fcgi"
+
+inv_install_apache_loglevel: "info"
+
+inv_install_apache_enable_qos: true
+inv_install_apache_enable_security: true
+inv_install_apache_enable_evasive: true
+inv_install_apache_enable_pagespeed: true
+inv_install_apache_enable_prefork: true
+
+inv_install_apache_security_core_version: "3.3.0"
+inv_install_apache_security_version: "3.0.10"
+inv_install_apache_remove_all_vhosts: true
+
+inv_add_apache_confs_http_listen_port: "{{ inv_install_apache_http_listen_port }}"
+inv_add_apache_confs_https_listen_port: "{{ inv_install_apache_https_listen_port }}"
+
+inv_add_apache_confs_webmaster: "your.webmaster@domain.tld"
+inv_add_apache_confs_request_body: 0
+inv_add_apache_confs_security_body_limit: 1024000000
+
+inv_add_apache_confs_ssl_files_path: "/etc/apache2/ssl"
+inv_add_apache_confs_conf_path: "/etc/apache2/sites-available"
+inv_add_apache_confs_base_document_root: "/var/www/html"
+
+inv_add_apache_confs_configurations_cert_bundles:
+  - name: "My-Local-Ansible-Root-CA.pem.crt"
+    type: "CA"
+    src: "/tmp/My-Local-Ansible-Root-CA.pem.crt"
+
+  - name: "My-Local-Ansible-Intermediate-CA-1.pem.crt"
+    type: "CA"
+    src: "/tmp/My-Local-Ansible-Intermediate-CA-1.pem.crt"
+
+  - name: "My-Local-Ansible-Intermediate-CA-2.pem.crt"
+    type: "CA"
+    src: "/tmp/My-Local-Ansible-Intermediate-CA-2.pem.crt"
+
+  - name: "my-phpmyadmin-server.domain.tld"
+    type: "cert"
+    src: "/tmp/my-phpmyadmin-server.domain.tld.zip"
+    dest: "/etc/apache2/ssl"
+    #src_user: "myUser"
+    #src_password: "secretPassword"
+    dest_user: "root"
+    dest_group: "root"
+    dest_mode: "0700"
+
+inv_add_apache_confs_configurations:
+  - server:
+      name: "my-phpmyadmin-server.domain.tld"
+      aliases:
+        - "localhost"
+        - "127.0.0.1"
+      webmaster: "{{ inv_add_apache_confs_webmaster }}"
+    ssl:
+      enabled: true
+      key: "{{ inv_add_apache_confs_ssl_files_path }}/my-phpmyadmin-server.domain.tld/my-phpmyadmin-server.domain.tld.pem.key"
+      crt: "{{ inv_add_apache_confs_ssl_files_path }}/my-phpmyadmin-server.domain.tld/my-phpmyadmin-server.domain.tld.pem.crt"
+    #proxy:
+    #  url: "https://127.0.0.1:8080"
+    #  pass: "/"
+    security:
+      disabled: false
+      request_body: 4096000
+      sec_rules_remove_by_id:
+        - 920280
+        - 980140
+        - 959100
+        - 949110
+    #rewrites:
+    #  - ^/\.well-known/carddav /remote.php/dav [R=301,L]
+    #  - ^/\.well-known/caldav /remote.php/dav [R=301,L]
+    #  - ^/\.well-known/webfinger /index.php/.well-known/webfinger [R=301,L]
+    #  - ^/\.well-known/nodeinfo /index.php/.well-known/nodeinfo [R=301,L]
+    custom_confs:
+        - name: "phpmyadmin.j2" # "hack" of the role to import a local apache2 conf
+          install_path: "/usr/share/phpmyadmin"
+          temp_path: "/var/lib/phpmyadmin/tmp"
+          fpm_pool: "PhpMyAdmin"
+          php_fpm_version: "8.2"
+          alias:
+            url: "/"
+            path: "/usr/share/phpmyadmin"
+          

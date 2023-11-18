@@ -30,3 +30,7 @@
 - name: "labocbz.install_apache"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-Apache.git"
   version: "3.1"
+
+- name: "labocbz.install_phpmyadmin"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-PhpMyAdmin.git"
+  version: "3.0"

@@ -232,3 +232,54 @@
         install_mariadb_secure_root_password: "{{ inv_install_mariadb_secure_root_password }}"
       ansible.builtin.include_role:
         name: "labocbz.install_mariadb"
+
+    - name: "Create users and grants for PhpMyAdmin sepcial case, on remote server"
+      register: output
+      run_once: true
+      changed_when: output.rc != 0
+      loop:
+        - "%"
+        - "127.0.0.1"
+        - "localhost"
+        - "{{ hostvars[ansible_hostname]['ansible_default_ipv4']['address'] }}"
+        #- "{{ inventory_hostname }}"
+      loop_control:
+        loop_var: address
+      ansible.builtin.shell: >
+        mysql -u root --password='{{ inv_install_mariadb_secure_root_password }}' --execute="GRANT ALL PRIVILEGES ON *.* TO 'admin'@'{{ address }}' IDENTIFIED BY 'PN$^L8zP*wmss@3q' WITH GRANT OPTION;"
+
+    - name: "Flush Privileges"
+      register: output
+      changed_when: output.rc != 0
+      ansible.builtin.shell: >
+        mysql -u root --password='{{ inv_install_mariadb_secure_root_password }}' --execute="FLUSH PRIVILEGES"
+
+# if you have any prepararion task
+- name: "Prepare PhpMyAdmin"
+  hosts: "all:&PHPMYADMIN"
+  gather_facts: true
+  tasks:
+
+    - name: "Import cryptographic content if needed (cert)"
+      loop: "{{ inv_phpmyadmin_cert_bundles }}"
+      loop_control:
+        loop_var: bundle
+      when: inv_phpmyadmin_cert_bundles is defined and bundle.type == "cert"
+      ansible.builtin.copy:
+        src: "../../tests/certs/{{ bundle.name }}.zip"
+        dest: "/tmp/{{ bundle.name }}.zip"
+        owner: "root"
+        group: "root"
+        mode: 0700
+
+    - name: "Import cryptographic content if needed (CA)"
+      loop: "{{ inv_phpmyadmin_cert_bundles }}"
+      loop_control:
+        loop_var: bundle
+      when: inv_phpmyadmin_cert_bundles is defined and bundle.type == "CA"
+      ansible.builtin.copy:
+        src: "../../tests/certs/{{ bundle.name }}"
+        dest: "/tmp/{{ bundle.name }}"
+        owner: "root"
+        group: "root"
+        mode: 0700
