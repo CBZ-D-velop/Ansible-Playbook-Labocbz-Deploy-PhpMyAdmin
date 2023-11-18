@@ -1,1 +1,49 @@
 ---
+
+inv_redis_bind: "0.0.0.0"
+inv_redis_proteced_mode: "no"
+inv_redis_loglevel: "notice"
+inv_redis_requirepass: "mySecret"
+
+inv_redis_cluster: false
+inv_redis_cluster_replicas: 1
+inv_redis_cluster_bootstrap: false
+
+inv_redis_path: "/etc/redis/redis-server-{{ port }}"
+inv_redis_conf: "{{ inv_redis_path }}/redis.conf"
+
+inv_redis_ports:
+  - 6379
+#  - 6380
+#  - 6381
+
+inv_redis_ssl: true
+inv_redis_ssl_domain: "my-redis-server.domain.tld"
+inv_redis_ssl_path: "/etc/redis/ssl"
+inv_redis_ssl_key: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/{{ inv_redis_ssl_domain }}.pem.key"
+inv_redis_ssl_cert: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/{{ inv_redis_ssl_domain }}.pem.crt"
+inv_redis_ssl_ca: "{{ inv_redis_ssl_path }}/{{ inv_redis_ssl_domain }}/ca-chain.pem.crt"
+inv_redis_ssl_auth_client: "no"
+
+inv_redis_cert_bundles:
+  - name: "My-Local-Ansible-Root-CA.pem.crt"
+    type: "CA"
+    src: "/tmp/My-Local-Ansible-Root-CA.pem.crt"
+    
+  - name: "My-Local-Ansible-Intermediate-CA-1.pem.crt"
+    type: "CA"
+    src: "/tmp/My-Local-Ansible-Intermediate-CA-1.pem.crt"
+
+  - name: "My-Local-Ansible-Intermediate-CA-2.pem.crt"
+    type: "CA"
+    src: "/tmp/My-Local-Ansible-Intermediate-CA-2.pem.crt"
+
+  - name: "my-redis-server.domain.tld"
+    type: "cert"
+    src: "/tmp/my-redis-server.domain.tld.zip"
+    dest: "{{ inv_redis_ssl_path }}"
+    #src_user: "myUser"
+    #src_password: "secretPassword"
+    dest_user: "root"
+    dest_group: "root"
+    dest_mode: "0755"

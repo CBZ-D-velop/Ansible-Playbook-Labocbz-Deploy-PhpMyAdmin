@@ -6,3 +6,27 @@
 - name: "labocbz.add_certificates"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-Certificates.git"
   version: "2.0"
+
+- name: "labocbz.install_php"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-PHP.git"
+  version: "1.0"
+
+- name: "labocbz.add_php_fpm_confs"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-PHP-FPM-Confs.git"
+  version: "2.0"
+
+- name: "labocbz.install_mariadb"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-Mariadb.git"
+  version: "2.0"
+
+- name: "labocbz.install_redis"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-Redis.git"
+  version: "2.0"
+
+- name: "labocbz.add_apache_confs"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-Apache-Confs.git"
+  version: "3.1"
+
+- name: "labocbz.install_apache"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-Apache.git"
+  version: "3.1"

@@ -1,6 +1,6 @@
 ---
 - name: "labocbz.deploy_phpmyadmin"
-  hosts: "all"
+  hosts: "{{ tower_env | default([]) }}"
   gather_facts: true
   remote_user: root
   become: true
