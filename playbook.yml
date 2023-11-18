@@ -1,0 +1,10 @@
+---
+- name: "labocbz.deploy_phpmyadmin"
+  hosts: "all"
+  gather_facts: true
+  remote_user: root
+  become: true
+  become_method: sudo
+  become_user: root
+
+  tasks:

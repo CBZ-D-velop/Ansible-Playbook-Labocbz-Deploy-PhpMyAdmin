@@ -1,0 +1,5 @@
+---
+- name: "Include labocbz.deploy_phpmyadmin playbook"
+  tags:
+      - "labocbz.deploy_phpmyadmin"
+  ansible.builtin.import_playbook: "../../playbook.yml"
