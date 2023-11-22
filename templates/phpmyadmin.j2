@@ -1,0 +1,121 @@
+    # phpMyAdmin default Apache configuration AS EXAMPLE DO NO USE IT
+
+    Alias {{ conf.alias.url }} {{ conf.alias.path }}/
+
+    <Directory {{ conf.install_path }}>
+        Options SymLinksIfOwnerMatch
+        DirectoryIndex index.php
+
+        Order allow,deny
+        Allow from all  
+        Require all granted
+
+        <IfModule mod_php5.c>
+
+            <IfModule mod_mime.c>
+                AddType application/x-httpd-php .php
+            </IfModule>
+
+            <FilesMatch ".+\.php$">
+                SetHandler application/x-httpd-php
+            </FilesMatch>
+
+            php_value include_path .
+            php_admin_value upload_tmp_dir {{ conf.temp_path }}
+            php_admin_value open_basedir {{ conf.install_path }}/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+            php_admin_value mbstring.func_overload 0
+
+        </IfModule>
+
+        <IfModule mod_php.c>
+
+            <IfModule mod_mime.c>
+                AddType application/x-httpd-php .php
+            </IfModule>
+
+            <FilesMatch ".+\.php$">
+                SetHandler application/x-httpd-php
+            </FilesMatch>
+
+            php_value include_path .
+            php_admin_value upload_tmp_dir {{ conf.temp_path }}
+            php_admin_value open_basedir {{ conf.install_path }}/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+            php_admin_value mbstring.func_overload 0
+
+        </IfModule>
+    </Directory>
+
+    # Authorize for setup
+    <Directory {{ conf.install_path }}/setup>
+
+        <IfModule mod_authz_core.c>
+
+            <IfModule mod_authn_file.c>
+                AuthType Basic
+                AuthName "phpMyAdmin Setup"
+                AuthUserFile /etc/phpmyadmin/htpasswd.setup
+            </IfModule>
+
+            Require valid-user
+
+        </IfModule>
+    </Directory>
+
+    # Disallow web access to directories that don't need it
+    <Directory {{ conf.install_path }}/templates>
+        Require all denied
+    </Directory>
+
+    <Directory {{ conf.install_path }}/libraries>
+        Require all denied
+    </Directory>
+
+    <Directory {{ conf.install_path }}/setup/lib>
+        Require all denied
+    </Directory>
+
+    <IfModule mod_fastcgi.c>
+        AddHandler php{{ conf.php_fpm_version }}-fcgi .php
+        Action php{{ conf.php_fpm_version }}-fcgi /php{{ conf.php_fpm_version }}-fcgi
+        Alias /php{{ conf.php_fpm_version }}-fcgi /usr/lib/cgi-bin/php{{ conf.php_fpm_version }}-fcgi
+        FastCgiExternalServer /usr/lib/cgi-bin/php{{ conf.php_fpm_version }}-fcgi -socket /var/run/php-fpm/{{ conf.php_fpm_version }}/{{ conf.fpm_pool }} -pass-header  Authorization
+
+        <Directory /usr/lib/cgi-bin>
+            Require all granted
+        </Directory>
+    </IfModule>
+
+    # Redirect to local php-fpm if mod_php is not available
+    <IfModule proxy_fcgi_module>
+        # Enable http authorization headers
+        <IfModule setenvif_module>
+        SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
+        </IfModule>
+
+        # Using (?:pattern) instead of (pattern) is a small optimization that
+        # avoid capturing the matching pattern (as $1) which isn't used here
+        <FilesMatch ".+\.ph(?:ar|p|tml)$">
+            SetHandler "proxy:unix:/var/run/php-fpm/{{ conf.php_fpm_version }}/{{ conf.fpm_pool }}.sock|fcgi://localhost"
+        </FilesMatch>
+
+    #The default configuration works for most of the installation, however it could
+    #be improved in various ways. One simple improvement is to not pass files that
+    #doesn't exist to the handler as shown below, for more configuration examples
+    #see https://wiki.apache.org/httpd/PHP-FPM
+        <FilesMatch ".+\.ph(?:ar|p|tml)$">
+            <If "-f %{REQUEST_FILENAME}">
+                SetHandler "proxy:unix:/var/run/php-fpm/{{ conf.php_fpm_version }}/{{ conf.fpm_pool }}.sock|fcgi://localhost"
+            </If>
+        </FilesMatch>
+
+        <FilesMatch ".+\.phps$">
+            # Deny access to raw php sources by default
+            # To re-enable it's recommended to enable access to the files
+            # only in specific virtual host or directory
+            Require all denied
+        </FilesMatch>
+        # Deny access to files without filename (e.g. '.php')
+        <FilesMatch "^\.ph(?:ar|p|ps|tml)$">
+            Require all denied
+        </FilesMatch>
+    </IfModule>
