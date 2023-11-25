@@ -65,6 +65,12 @@
     - name: "Install PhpMyAdmin"
       when: inv_install_phpmyadmin | default(false)
       block:
+        - name: "Install Mariadb Client"
+          ansible.builtin.package:
+            update_cache: true
+            name:
+              - "mariadb-client"
+
         - name: "Include labocbz.add_certificates"
           tags:
             - "labocbz.add_certificates"
