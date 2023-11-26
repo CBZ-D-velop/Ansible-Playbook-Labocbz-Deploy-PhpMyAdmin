@@ -65,7 +65,7 @@
         - name: "Force load proxy_fcgi"
           register: output
           changed_when: output.rc != 0
-          ansible.builtin.command: >
+          ansible.builtin.shell: >
             a2enmod proxy_fcgi && systemctl restart apache2
 
     - name: "Install PhpMyAdmin"
