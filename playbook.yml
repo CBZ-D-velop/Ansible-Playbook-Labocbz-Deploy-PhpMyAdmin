@@ -62,15 +62,15 @@
           ansible.builtin.include_role:
             name: "labocbz.add_php_fpm_confs"
 
+        - name: "Force load proxy_fcgi"
+          register: output
+          changed_when: output.rc != 0
+          ansible.builtin.command: >
+            a2enmod proxy_fcgi && systemctl restart apache2
+
     - name: "Install PhpMyAdmin"
       when: inv_install_phpmyadmin | default(false)
       block:
-        - name: "Install Mariadb Client"
-          ansible.builtin.package:
-            update_cache: true
-            name:
-              - "mariadb-client"
-
         - name: "Include labocbz.add_certificates"
           tags:
             - "labocbz.add_certificates"
