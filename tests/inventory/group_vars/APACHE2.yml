@@ -94,7 +94,7 @@ inv_add_apache_confs_configurations:
         - name: "phpmyadmin.j2" # "hack" of the role to import a local apache2 conf
           install_path: "/usr/share/phpmyadmin"
           temp_path: "/var/lib/phpmyadmin/tmp"
-          fpm_pool: "PhpMyAdmin"
+          fpm_pool: "PhpMyAdmin-fpm"
           php_fpm_version: "8.2"
           alias:
             url: "/"

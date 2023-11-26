@@ -78,7 +78,7 @@
         AddHandler php{{ conf.php_fpm_version }}-fcgi .php
         Action php{{ conf.php_fpm_version }}-fcgi /php{{ conf.php_fpm_version }}-fcgi
         Alias /php{{ conf.php_fpm_version }}-fcgi /usr/lib/cgi-bin/php{{ conf.php_fpm_version }}-fcgi
-        FastCgiExternalServer /usr/lib/cgi-bin/php{{ conf.php_fpm_version }}-fcgi -socket /var/run/php-fpm/{{ conf.php_fpm_version }}/{{ conf.fpm_pool }} -pass-header  Authorization
+        FastCgiExternalServer /usr/lib/cgi-bin/php{{ conf.php_fpm_version }}-fcgi -socket /var/run/{{ conf.fpm_pool }}.sock -pass-header  Authorization
 
         <Directory /usr/lib/cgi-bin>
             Require all granted
@@ -95,7 +95,7 @@
         # Using (?:pattern) instead of (pattern) is a small optimization that
         # avoid capturing the matching pattern (as $1) which isn't used here
         <FilesMatch ".+\.ph(?:ar|p|tml)$">
-            SetHandler "proxy:unix:/var/run/php-fpm/{{ conf.php_fpm_version }}/{{ conf.fpm_pool }}.sock|fcgi://localhost"
+            SetHandler "proxy:unix:/var/run/{{ conf.fpm_pool }}.sock|fcgi://localhost"
         </FilesMatch>
 
     #The default configuration works for most of the installation, however it could
@@ -104,7 +104,7 @@
     #see https://wiki.apache.org/httpd/PHP-FPM
         <FilesMatch ".+\.ph(?:ar|p|tml)$">
             <If "-f %{REQUEST_FILENAME}">
-                SetHandler "proxy:unix:/var/run/php-fpm/{{ conf.php_fpm_version }}/{{ conf.fpm_pool }}.sock|fcgi://localhost"
+                SetHandler "proxy:unix:/var/run/{{ conf.fpm_pool }}.sock|fcgi://localhost"
             </If>
         </FilesMatch>
 
