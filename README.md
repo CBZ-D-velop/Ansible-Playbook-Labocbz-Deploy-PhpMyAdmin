@@ -120,6 +120,11 @@ Here you can put your change to keep a trace of your work and decisions.
 * Playbook handle the install of PhpMyAmdin
 * Playbook can create the user and the database for PMA
 
+### 2023-12-16: System users
+
+* Role can now use system users and address groups
+* 10 years cert added
+
 ## Authors
 
 * Lord Robin Crombez
