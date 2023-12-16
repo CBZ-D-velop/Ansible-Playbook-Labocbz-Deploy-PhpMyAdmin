@@ -15,6 +15,8 @@
         - name: "Include labocbz.prepare_host"
           tags:
             - "labocbz.prepare_host"
+          vars:
+            prepare_host_system_users: "{{ inv_prepare_host_phpmyadmin_system_users}}"
           ansible.builtin.include_role:
             name: "labocbz.prepare_host"
 
@@ -106,9 +108,25 @@
           ansible.builtin.include_role:
             name: "labocbz.install_phpmyadmin"
 
+        - name: "Include labocbz.add_logrotate_confs"
+          tags:
+            - "labocbz.add_logrotate_confs"
+          vars:
+            logrotate_configurations: "{{ inv_logrotate_configurations_php }}"
+          ansible.builtin.include_role:
+            name: "labocbz.add_logrotate_confs"
+
     - name: "Install Apache2"
       when: inv_install_apache | default(false)
       block:
+        - name: "Include labocbz.prepare_host"
+          tags:
+            - "labocbz.prepare_host"
+          vars:
+            prepare_host_system_users: "{{ inv_prepare_host_apache_system_users}}"
+          ansible.builtin.include_role:
+            name: "labocbz.prepare_host"
+
         - name: "Include labocbz.add_certificates"
           tags:
             - "labocbz.add_certificates"

@@ -8,12 +8,6 @@
     #- name: "Include cryptographic content var file"
     #  ansible.builtin.include_vars: "../../tests/certs/main.yml"
 
-    - name: "Include labocbz.prepare_host"
-      tags:
-        - "labocbz.prepare_host"
-      ansible.builtin.include_role:
-        name: "labocbz.prepare_host"
-
     - name: "Gather facts from all hosts"
       delegate_to: "{{ item }}"
       delegate_facts: true
@@ -78,11 +72,19 @@
   gather_facts: true
   tasks:
 
+    - name: "Include labocbz.prepare_host"
+      tags:
+        - "labocbz.prepare_host"
+      vars:
+        prepare_host_system_users: "{{ inv_prepare_host_redis_system_users }}"
+      ansible.builtin.include_role:
+        name: "labocbz.prepare_host"
+
     - name: "Import cryptographic content if needed (cert)"
-      loop: "{{ inv_redis_cert_bundles }}"
+      loop: "{{ inv_install_redis_cert_bundles }}"
       loop_control:
         loop_var: bundle
-      when: inv_redis_cert_bundles is defined and bundle.type == "cert"
+      when: inv_install_redis_cert_bundles is defined and bundle.type == "cert"
       ansible.builtin.copy:
         src: "../../tests/certs/{{ bundle.name }}.zip"
         dest: "/tmp/{{ bundle.name }}.zip"
@@ -91,10 +93,10 @@
         mode: 0700
 
     - name: "Import cryptographic content if needed (CA)"
-      loop: "{{ inv_redis_cert_bundles }}"
+      loop: "{{ inv_install_redis_cert_bundles }}"
       loop_control:
         loop_var: bundle
-      when: inv_redis_cert_bundles is defined and bundle.type == "CA"
+      when: inv_install_redis_cert_bundles is defined and bundle.type == "CA"
       ansible.builtin.copy:
         src: "../../tests/certs/{{ bundle.name }}"
         dest: "/tmp/{{ bundle.name }}"
@@ -105,10 +107,10 @@
     - name: "Include labocbz.add_certificates"
       tags:
         - "labocbz.add_certificates"
-      loop: "{{ inv_redis_cert_bundles }}"
+      loop: "{{ inv_install_redis_cert_bundles }}"
       loop_control:
         loop_var: bundle
-      when: inv_redis_cert_bundles is defined
+      when: inv_install_redis_cert_bundles is defined
       vars:
         add_certificates_bundle_name: "{{ bundle.name }}"
         add_certificates_bundle_type: "{{ bundle.type }}"
@@ -125,25 +127,25 @@
     - name: "Include labocbz.install_redis"
       tags:
         - "labocbz.install_redis"
-      loop: "{{ inv_redis_ports }}"
+      loop: "{{ inv_install_redis_ports }}"
       loop_control:
         loop_var: port
       vars:
-        redis_bind: "{{ inv_redis_bind }}"
+        redis_bind: "{{ inv_install_redis_bind }}"
         redis_port: "{{ port }}"
-        redis_proteced_mode: "{{ inv_redis_proteced_mode }}"
-        redis_loglevel: "{{ inv_redis_loglevel }}"
-        redis_requirepass: "{{ inv_redis_requirepass }}"
-        redis_cluster: "{{ inv_redis_cluster }}"
-        redis_path: "{{ inv_redis_path }}"
-        redis_conf: "{{ inv_redis_conf }}"
-        redis_ssl: "{{ inv_redis_ssl }}"
-        redis_ssl_domain: "{{ inv_redis_ssl_domain }}"
-        redis_ssl_path: "{{ inv_redis_ssl_path }}"
-        redis_ssl_key: "{{ inv_redis_ssl_key }}"
-        redis_ssl_cert: "{{ inv_redis_ssl_cert }}"
-        redis_ssl_ca: "{{ inv_redis_ssl_ca }}"
-        redis_ssl_auth_client: "{{ inv_redis_ssl_auth_client }}"
+        redis_proteced_mode: "{{ inv_install_redis_proteced_mode }}"
+        redis_loglevel: "{{ inv_install_redis_loglevel }}"
+        redis_requirepass: "{{ inv_install_redis_requirepass }}"
+        redis_cluster: "{{ inv_install_redis_cluster }}"
+        redis_path: "{{ inv_install_redis_path }}"
+        redis_conf: "{{ inv_install_redis_conf }}"
+        redis_ssl: "{{ inv_install_redis_ssl }}"
+        redis_ssl_domain: "{{ inv_install_redis_ssl_domain }}"
+        redis_ssl_path: "{{ inv_install_redis_ssl_path }}"
+        redis_ssl_key: "{{ inv_install_redis_ssl_key }}"
+        redis_ssl_cert: "{{ inv_install_redis_ssl_cert }}"
+        redis_ssl_ca: "{{ inv_install_redis_ssl_ca }}"
+        redis_ssl_auth_client: "{{ inv_install_redis_ssl_auth_client }}"
       ansible.builtin.include_role:
         name: "labocbz.install_redis"
 
@@ -152,6 +154,14 @@
   hosts: "all:&MARIADB"
   gather_facts: true
   tasks:
+
+    - name: "Include labocbz.prepare_host"
+      tags:
+        - "labocbz.prepare_host"
+      vars:
+        prepare_host_system_users: "{{ inv_prepare_host_mariadb_system_users }}"
+      ansible.builtin.include_role:
+        name: "labocbz.prepare_host"
 
     - name: "Import cryptographic content if needed (cert)"
       loop: "{{ inv_mariadb_cert_bundles }}"

@@ -1,4 +1,8 @@
 ---
+inv_prepare_host_phpmyadmin_system_users:
+  - login: "www-data"
+    group: "www-data"
+
 inv_install_phpmyadmin: true
 
 inv_install_phpmyadmin_blowfish: "T_HFR8yM8NzybY5nkRNkmVYhktYsw7vB"
