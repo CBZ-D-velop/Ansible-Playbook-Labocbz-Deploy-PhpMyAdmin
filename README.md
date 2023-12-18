@@ -125,6 +125,13 @@ Here you can put your change to keep a trace of your work and decisions.
 * Role can now use system users and address groups
 * 10 years cert added
 
+### 2023-12-18: Log rotation and tests
+
+* Added Boolean based vars
+* Reorganize the playbook
+* Use system users
+* Deploy logrotate configurations
+
 ## Authors
 
 * Lord Robin Crombez

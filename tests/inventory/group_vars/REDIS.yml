@@ -50,3 +50,6 @@ inv_install_redis_cert_bundles:
     dest_user: "redis"
     dest_group: "redis"
     dest_mode: "0700"
+
+inv_logrotate_redis_configurations:
+  - "redis-server"
