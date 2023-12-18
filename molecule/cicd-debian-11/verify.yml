@@ -1,90 +1,71 @@
 ---
 # Don't forget to keep this file updated
 # molecule/<scenario>/verify.yml
-- name: "Verify"
+- name: "Verify PHP-FPM"
   hosts: "all:&PHP-FPM"
   gather_facts: false
   tasks:
 
-    - name: "Verify PHP -v , with default call"
-      when: inv_install_php_version_is_default | default(false)
-      register: php_version_output
-      changed_when: php_version_output.rc != 0
-      failed_when: "'PHP {{ inv_install_php_version }}' not in php_version_output.stdout"
-      ansible.builtin.command: "php -v"
+    - name: "Verify PHP-FPM"
+      when: inv_install_php | default(false)
+      block:
+        - name: "Verify PHP -v , with default call"
+          when: inv_install_php_version_is_default | default(false)
+          register: php_version_output
+          changed_when: php_version_output.rc != 0
+          failed_when: "'PHP {{ inv_install_php_version }}' not in php_version_output.stdout"
+          ansible.builtin.command: "php -v"
 
-    - name: "Verify PHP -v , with custom binaries for PHP {{ inv_install_php_version }}"
-      loop:
-        - "php-{{ inv_install_php_version }}"
-        - "/usr/bin/php{{ inv_install_php_version }}"
-        - "/bin/php-{{ inv_install_php_version }}"
-      loop_control:
-        loop_var: php_call
-      register: php_version_output
-      changed_when: php_version_output.rc != 0
-      failed_when: "'PHP {{ inv_install_php_version }}' not in php_version_output.stdout"
-      ansible.builtin.command: "{{ php_call }} -v"
+        - name: "Verify PHP -v , with custom binaries for PHP {{ inv_install_php_version }}"
+          loop:
+            - "php-{{ inv_install_php_version }}"
+            - "/usr/bin/php{{ inv_install_php_version }}"
+            - "/bin/php-{{ inv_install_php_version }}"
+          loop_control:
+            loop_var: php_call
+          register: php_version_output
+          changed_when: php_version_output.rc != 0
+          failed_when: "'PHP {{ inv_install_php_version }}' not in php_version_output.stdout"
+          ansible.builtin.command: "{{ php_call }} -v"
 
-    - name: "Get PHP FPM service current state"
-      when: inv_install_php_install_fpm | default(inv_install_php_install_fpm)
-      register: fpm_service_status
-      failed_when: not fpm_service_status.status.ActiveState == 'active'
-      ansible.builtin.systemd:
-        name: "php{{ inv_install_php_version }}-fpm"
+        - name: "Get PHP FPM service current state"
+          when: inv_install_php_install_fpm | default(inv_install_php_install_fpm)
+          register: fpm_service_status
+          failed_when: not fpm_service_status.status.ActiveState == 'active'
+          ansible.builtin.systemd:
+            name: "php{{ inv_install_php_version }}-fpm"
 
-    - name: "Get PHP FPM service current state"
-      register: fpm_service_status
-      failed_when: not fpm_service_status.status.ActiveState == 'active'
-      ansible.builtin.systemd:
-        name: "php{{ inv_add_php_fpm_confs_php_version }}-fpm"
+        - name: "Get PHP FPM service current state"
+          register: fpm_service_status
+          failed_when: not fpm_service_status.status.ActiveState == 'active'
+          ansible.builtin.systemd:
+            name: "php{{ inv_add_php_fpm_confs_php_version }}-fpm"
 
-    - name: "Ensure all pool socks are here"
-      register: pool_sock
-      failed_when: not pool_sock.stat.exists
-      loop: "{{ inv_add_php_fpm_confs_fpm_pools }}"
-      loop_control:
-        loop_var: pool  
-      ansible.builtin.stat:
-        path: /var/run/{{ pool.name }}-fpm.sock
+        - name: "Ensure all pool socks are here"
+          register: pool_sock
+          failed_when: not pool_sock.stat.exists
+          loop: "{{ inv_add_php_fpm_confs_fpm_pools }}"
+          loop_control:
+            loop_var: pool  
+          ansible.builtin.stat:
+            path: /var/run/{{ pool.name }}-fpm.sock
 
 # Don't forget to keep this file updated
 # molecule/<scenario>/verify.yml
-- name: "Verify"
+- name: "Verify APACHE2"
   hosts: "all:&APACHE2"
   gather_facts: false
   tasks:
 
-    - name: "Get Apache2 service current state"
-      register: install_apache_service_status
-      failed_when: not install_apache_service_status.status.ActiveState == 'active'
-      ansible.builtin.systemd:
-        name: "apache2"
-
-    - name: "Check Apache2 folders and conf"
-      loop:
-        - "/etc/apache2/apache2.conf"
-        - "/etc/apache2/ports.conf"
-      loop_control:
-        loop_var: folder_path
-      register: folder_check
-      failed_when: not folder_check.stat.exists
-      ansible.builtin.stat:
-        path: "{{ folder_path }}"
-
-    - name: "Check Apache2 HTTP connectivity"
-      ansible.builtin.wait_for:
-        host: "{{ inventory_hostname }}"
-        port: "{{ inv_install_apache_http_listen_port }}"
-        timeout: 120
-
-    - name: "Check Apache2 HTTPS connectivity"
-      ansible.builtin.wait_for:
-        host: "{{ inventory_hostname }}"
-        port: "{{ inv_install_apache_https_listen_port }}"
-        timeout: 120
-
-    - name: "Check Apache2 default configuration"
+    - name: "Verify APACHE2"
+      when: inv_install_apache | default(false)
       block:
+        - name: "Get Apache2 service current state"
+          register: install_apache_service_status
+          failed_when: not install_apache_service_status.status.ActiveState == 'active'
+          ansible.builtin.systemd:
+            name: "apache2"
+
         - name: "Check Apache2 folders and conf"
           loop:
             - "/etc/apache2/apache2.conf"
@@ -96,63 +77,88 @@
           ansible.builtin.stat:
             path: "{{ folder_path }}"
 
-        - name: "Check Apache2 HTTP and conf"
-          loop: "{{ inv_add_apache_confs_configurations }}"
-          loop_control:
-            loop_var: vhost
-          register: folder_check
-          failed_when: not folder_check.stat.exists
-          ansible.builtin.stat:
-            path: "{{ inv_add_apache_confs_conf_path }}/{{ vhost.server.name }}-HTTP.conf"
-
-        - name: "Check Apache2 HTTPS and conf"
-          loop: "{{ inv_add_apache_confs_configurations }}"
-          loop_control:
-            loop_var: vhost
-          register: folder_check
-          when: vhost.ssl
-          failed_when: not folder_check.stat.exists
-          ansible.builtin.stat:
-            path: "{{ inv_add_apache_confs_conf_path }}/{{ vhost.server.name }}-HTTPS.conf"
-
-        - name: "Check HTTPS conf: certs"
-          loop: "{{ inv_add_apache_confs_configurations }}"
-          loop_control:
-            loop_var: vhost
-          register: folder_check
-          when: vhost.ssl.enabled | default(false)
-          failed_when: not folder_check.stat.exists
-          ansible.builtin.stat:
-            path: "{{ vhost.ssl.crt }}"
-
-        - name: "Check HTTPS conf: keys"
-          loop: "{{ inv_add_apache_confs_configurations }}"
-          loop_control:
-            loop_var: vhost
-          register: folder_check
-          when: vhost.ssl.enabled | default(false)
-          failed_when: not folder_check.stat.exists
-          ansible.builtin.stat:
-            path: "{{ vhost.ssl.key }}"
-
-    - name: "Check Apache2 webserver"
-      block:
-        - name: "Check Apache2 connectivity"
+        - name: "Check Apache2 HTTP connectivity"
           ansible.builtin.wait_for:
             host: "{{ inventory_hostname }}"
-            port: "{{ inv_add_apache_confs_http_listen_port }}"
+            port: "{{ inv_install_apache_http_listen_port }}"
             timeout: 120
 
-        - name: "Check default vhost on HTTP"
-          register: result
-          failed_when: not (result.status != 200 or result.status == -1)
-          ansible.builtin.uri:
-            url: "http://{{ inventory_hostname }}:{{ inv_add_apache_confs_http_listen_port }}/"
-            method: "GET"
+        - name: "Check Apache2 HTTPS connectivity"
+          ansible.builtin.wait_for:
+            host: "{{ inventory_hostname }}"
+            port: "{{ inv_install_apache_https_listen_port }}"
+            timeout: 120
 
-        - name: "Check default vhost on HTTPS"
-          register: result
-          failed_when: not (result.status != 200 or result.status == -1)
-          ansible.builtin.uri:
-            url: "https://{{ inventory_hostname }}:{{ inv_add_apache_confs_https_listen_port }}/"
-            method: "GET"
+        - name: "Check Apache2 default configuration"
+          block:
+            - name: "Check Apache2 folders and conf"
+              loop:
+                - "/etc/apache2/apache2.conf"
+                - "/etc/apache2/ports.conf"
+              loop_control:
+                loop_var: folder_path
+              register: folder_check
+              failed_when: not folder_check.stat.exists
+              ansible.builtin.stat:
+                path: "{{ folder_path }}"
+
+            - name: "Check Apache2 HTTP and conf"
+              loop: "{{ inv_add_apache_confs_configurations }}"
+              loop_control:
+                loop_var: vhost
+              register: folder_check
+              failed_when: not folder_check.stat.exists
+              ansible.builtin.stat:
+                path: "{{ inv_add_apache_confs_conf_path }}/{{ vhost.server.name }}-HTTP.conf"
+
+            - name: "Check Apache2 HTTPS and conf"
+              loop: "{{ inv_add_apache_confs_configurations }}"
+              loop_control:
+                loop_var: vhost
+              register: folder_check
+              when: vhost.ssl
+              failed_when: not folder_check.stat.exists
+              ansible.builtin.stat:
+                path: "{{ inv_add_apache_confs_conf_path }}/{{ vhost.server.name }}-HTTPS.conf"
+
+            - name: "Check HTTPS conf: certs"
+              loop: "{{ inv_add_apache_confs_configurations }}"
+              loop_control:
+                loop_var: vhost
+              register: folder_check
+              when: vhost.ssl.enabled | default(false)
+              failed_when: not folder_check.stat.exists
+              ansible.builtin.stat:
+                path: "{{ vhost.ssl.crt }}"
+
+            - name: "Check HTTPS conf: keys"
+              loop: "{{ inv_add_apache_confs_configurations }}"
+              loop_control:
+                loop_var: vhost
+              register: folder_check
+              when: vhost.ssl.enabled | default(false)
+              failed_when: not folder_check.stat.exists
+              ansible.builtin.stat:
+                path: "{{ vhost.ssl.key }}"
+
+        - name: "Check Apache2 webserver"
+          block:
+            - name: "Check Apache2 connectivity"
+              ansible.builtin.wait_for:
+                host: "{{ inventory_hostname }}"
+                port: "{{ inv_add_apache_confs_http_listen_port }}"
+                timeout: 120
+
+            - name: "Check default vhost on HTTP"
+              register: result
+              failed_when: not (result.status != 200 or result.status == -1)
+              ansible.builtin.uri:
+                url: "http://{{ inventory_hostname }}:{{ inv_add_apache_confs_http_listen_port }}/"
+                method: "GET"
+
+            - name: "Check default vhost on HTTPS"
+              register: result
+              failed_when: not (result.status != 200 or result.status == -1)
+              ansible.builtin.uri:
+                url: "https://{{ inventory_hostname }}:{{ inv_add_apache_confs_https_listen_port }}/"
+                method: "GET"

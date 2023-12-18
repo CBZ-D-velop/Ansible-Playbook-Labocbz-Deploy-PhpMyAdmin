@@ -64,3 +64,6 @@ inv_mariadb_cert_bundles:
     dest_user: "mysql"
     dest_group: "mysql"
     dest_mode: "0700"
+
+inv_logrotate_mariadb_configurations:
+  - "mariadb-server"
