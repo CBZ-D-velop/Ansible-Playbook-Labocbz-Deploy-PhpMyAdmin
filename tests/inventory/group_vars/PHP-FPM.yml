@@ -24,6 +24,7 @@ inv_install_php_max_file_uploads: 20
 inv_install_php_allow_url_fopen: "Off"
 inv_install_php_allow_url_include: "Off"
 inv_install_php_interned_strings_buffer: 64
+inv_install_php_interned_strings_memory_consumption: 256
 
 #inv_install_php_session_save_handler: "files"
 #inv_install_php_session_save_path: "/tmp/"
