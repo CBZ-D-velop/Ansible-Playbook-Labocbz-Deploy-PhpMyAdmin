@@ -9,7 +9,7 @@
 
 - name: "labocbz.install_php"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-PHP.git"
-  version: "2.0"
+  version: "2.1"
 
 - name: "labocbz.add_php_fpm_confs"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-PHP-FPM-Confs.git"
