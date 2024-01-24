@@ -9,11 +9,11 @@
 
 - name: "labocbz.install_php"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-PHP.git"
-  version: "2.1"
+  version: "3.0"
 
 - name: "labocbz.add_php_fpm_confs"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-PHP-FPM-Confs.git"
-  version: "3.0"
+  version: "4.0"
 
 - name: "labocbz.install_mariadb"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-Mariadb.git"
