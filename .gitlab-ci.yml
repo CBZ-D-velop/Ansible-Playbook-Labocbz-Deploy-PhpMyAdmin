@@ -34,6 +34,8 @@ variables:
     - yamllint -c ./.yamllint $path # Here mains files
   allow_failure: false
   retry: 2
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
 
 # Then we need to lint on role's files with a JINJA2 vision
 # Because if one of the templates files doesn't respect JINJA2 conventions,
@@ -49,6 +51,8 @@ variables:
     - "j2lint ./templates/*.j2 --ignore S3 S7"
   allow_failure: false
   retry: 2
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
 
 .ansible_lint: &ansible_lint
   stage: ansible-lint
@@ -61,6 +65,8 @@ variables:
     - ansible-lint --config=./.ansible-lint --exclude molecule --exclude tests ./*
   allow_failure: false
   retry: 2
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
 
 .molecule_test: &molecule_test
   stage: molecule-test
@@ -80,6 +86,8 @@ variables:
     - "molecule test --scenario-name $PIPELINE_SCENARIO_NAME"
   allow_failure: false
   retry: 2
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
 
 ###############################################################################
 #################### CI JOBS
