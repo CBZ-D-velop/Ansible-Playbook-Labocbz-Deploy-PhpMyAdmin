@@ -20,6 +20,12 @@ variables:
 #################### actions
 ###############################################################################
 
+# As a GitLab ci, we use the default template :)
+sast:
+  stage: gitlab-test
+include:
+- template: Security/SAST.gitlab-ci.yml
+  allow_failure: false
 # To start, we need to lint role's files with a YML vision
 # Because if one of the files doesn't respect YML conventions,
 # we dont need to test rest of the pipeline
