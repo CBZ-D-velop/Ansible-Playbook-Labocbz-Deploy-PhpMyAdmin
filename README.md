@@ -132,6 +132,12 @@ Here you can put your change to keep a trace of your work and decisions.
 * Use system users
 * Deploy logrotate configurations
 
+### 2023-03-07: Refacto and fix
+
+* Refacto of the playbook
+* Added latest versions
+* Tested and validated on Debian 11/12 and Ubuntu 22
+
 ## Authors
 
 * Lord Robin Crombez
