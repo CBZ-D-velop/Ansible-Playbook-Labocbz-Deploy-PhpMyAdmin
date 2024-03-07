@@ -140,7 +140,7 @@ Here you can put your change to keep a trace of your work and decisions.
 
 * [Ansible playbook documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_playbooks.html)
 * [Ansible Molecule documentation](https://molecule.readthedocs.io/)
-* [labocbz.prepare_host](https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Prepare-Host.git)
+* [labocbz.prepare_host](https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-deploy-phpmyadmin.git)
 * [labocbz.add_certificates](https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-Certificates.git)
 * [labocbz.install_php](https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Install-PHP.git)
 * [labocbz.add_php_fpm_confs](https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-PHP-FPM-Confs.git)

@@ -15,36 +15,36 @@
           tags:
             - "labocbz.install_php"
           vars:
-            install_php_version: "{{ inv_install_php_version }}"
-            install_php_version_is_default: "{{ inv_install_php_version_is_default }}"
-            install_php_extensions: "{{ inv_install_php_extensions }}"
-            install_php_install_fpm: "{{ inv_install_php_install_fpm }}"
-            install_php_import_cli_conf: "{{ inv_install_php_import_cli_conf }}"
-            install_php_import_apache_conf: "{{ inv_install_php_import_apache_conf }}"
-            install_php_import_cgi_conf: "{{ inv_install_php_import_cgi_conf }}"
-            install_php_import_fpm_conf: "{{ inv_install_php_import_fpm_conf }}"
-            install_php_max_input_time: "{{ inv_install_php_max_input_time }}"
-            install_php_output_buffering: "{{ inv_install_php_output_buffering }}"
-            install_php_cgi_fix_pathinfo: "{{ inv_install_php_cgi_fix_pathinfo }}"
-            install_php_expose_php: "{{ inv_install_php_expose_php }}"
-            install_php_max_execution_time: "{{ inv_install_php_max_execution_time }}"
-            install_php_memory_limit: "{{ inv_install_php_memory_limit }}"
-            install_php_post_max_size: "{{ inv_install_php_post_max_size }}"
-            install_php_file_uploads: "{{ inv_install_php_file_uploads }}"
-            install_php_upload_max_filesize: "{{ inv_install_php_upload_max_filesize }}"
-            install_php_max_file_uploads: "{{ inv_install_php_max_file_uploads }}"
-            install_php_allow_url_fopen: "{{ inv_install_php_allow_url_fopen }}"
-            install_php_allow_url_include: "{{ inv_install_php_allow_url_include }}"
-            install_php_session_save_handler: "{{ inv_install_php_session_save_handler }}"
-            install_php_session_save_path: "{{ inv_install_php_session_save_path }}"
-            install_php_session_auto_start: "{{ inv_install_php_session_auto_start }}"
-            install_php_session_use_strict_mode: "{{ inv_install_php_session_use_strict_mode }}"
-            install_php_disable_functions: "{{ inv_install_php_disable_functions }}"
-            install_php_remove_all_fpm_pools: "{{ inv_install_php_remove_all_fpm_pools }}"
-            install_php_fpm_pools_path: "{{ inv_install_php_fpm_pools_path }}"
-            install_php_interned_strings_buffer: "{{ inv_install_php_interned_strings_buffer }}"
-            install_php_interned_strings_memory_consumption: "{{ inv_install_php_interned_strings_memory_consumption }}"
-            install_php_log_level: "{{ inv_install_php_log_level }}"
+            install_php__version: "{{ inv_install_php__version }}"
+            install_php__version_is_default: "{{ inv_install_php__version_is_default }}"
+            install_php__extensions: "{{ inv_install_php__extensions }}"
+            install_php__install_fpm: "{{ inv_install_php__install_fpm }}"
+            install_php__import_cli_conf: "{{ inv_install_php__import_cli_conf }}"
+            install_php__import_apache_conf: "{{ inv_install_php__import_apache_conf }}"
+            install_php__import_cgi_conf: "{{ inv_install_php__import_cgi_conf }}"
+            install_php__import_fpm_conf: "{{ inv_install_php__import_fpm_conf }}"
+            install_php__max_input_time: "{{ inv_install_php__max_input_time }}"
+            install_php__output_buffering: "{{ inv_install_php__output_buffering }}"
+            install_php__cgi_fix_pathinfo: "{{ inv_install_php__cgi_fix_pathinfo }}"
+            install_php__expose_php: "{{ inv_install_php__expose_php }}"
+            install_php__max_execution_time: "{{ inv_install_php__max_execution_time }}"
+            install_php__memory_limit: "{{ inv_install_php__memory_limit }}"
+            install_php__post_max_size: "{{ inv_install_php__post_max_size }}"
+            install_php__file_uploads: "{{ inv_install_php__file_uploads }}"
+            install_php__upload_max_filesize: "{{ inv_install_php__upload_max_filesize }}"
+            install_php__max_file_uploads: "{{ inv_install_php__max_file_uploads }}"
+            install_php__allow_url_fopen: "{{ inv_install_php__allow_url_fopen }}"
+            install_php__allow_url_include: "{{ inv_install_php__allow_url_include }}"
+            install_php__session_save_handler: "{{ inv_install_php__session_save_handler }}"
+            install_php__session_save_path: "{{ inv_install_php__session_save_path }}"
+            install_php__session_auto_start: "{{ inv_install_php__session_auto_start }}"
+            install_php__session_use_strict_mode: "{{ inv_install_php__session_use_strict_mode }}"
+            install_php__disable_functions: "{{ inv_install_php__disable_functions }}"
+            install_php__remove_all_fpm_pools: "{{ inv_install_php__remove_all_fpm_pools }}"
+            install_php__fpm_pools_path: "{{ inv_install_php__fpm_pools_path }}"
+            install_php__interned_strings_buffer: "{{ inv_install_php__interned_strings_buffer }}"
+            install_php__interned_strings_memory_consumption: "{{ inv_install_php__interned_strings_memory_consumption }}"
+            install_php__log_level: "{{ inv_install_php__log_level }}"
           ansible.builtin.include_role:
             name: "labocbz.install_php"
 
@@ -52,9 +52,9 @@
           tags:
             - "labocbz.add_php_fpm_confs"
           vars:
-            add_php_fpm_confs_php_version: "{{ inv_add_php_fpm_confs_php_version }}"
-            add_php_fpm_confs_php_pools_path: "{{ inv_add_php_fpm_confs_php_pools_path }}"
-            add_php_fpm_confs_fpm_pools: "{{ inv_add_php_fpm_confs_fpm_pools }}"
+            add_php_fpm_confs__php_version: "{{ inv_add_php_fpm_confs__php_version }}"
+            add_php_fpm_confs__php_pools_path: "{{ inv_add_php_fpm_confs__php_pools_path }}"
+            add_php_fpm_confs__fpm_pools: "{{ inv_add_php_fpm_confs__fpm_pools }}"
           ansible.builtin.include_role:
             name: "labocbz.add_php_fpm_confs"
 
@@ -68,7 +68,7 @@
           tags:
             - "labocbz.add_logrotate_confs"
           vars:
-            logrotate_configurations: "{{ inv_logrotate_php_configurations }}"
+            add_logrotate_confs__files: "{{ inv_add_logrotate_confs__php_configurations }}"
           ansible.builtin.include_role:
             name: "labocbz.add_logrotate_confs"
 
@@ -79,7 +79,7 @@
           tags:
             - "labocbz.prepare_host"
           vars:
-            prepare_host_system_users: "{{ inv_prepare_host_phpmyadmin_system_users }}"
+            prepare_host__system_users: "{{ inv_prepare_host__phpmyadmin_system_users }}"
           ansible.builtin.include_role:
             name: "labocbz.prepare_host"
 
@@ -91,15 +91,15 @@
             loop_var: bundle
           when: inv_phpmyadmin_cert_bundles is defined
           vars:
-            add_certificates_bundle_name: "{{ bundle.name }}"
-            add_certificates_bundle_type: "{{ bundle.type }}"
-            add_certificates_bundle_src: "{{ bundle.src }}"
-            add_certificates_bundle_dest: "{{ bundle.dest }}"
-            add_certificates_bundle_src_user: "{{ bundle.src_user }}"
-            add_certificates_bundle_src_password: "{{ bundle.src_password }}"
-            add_certificates_bundle_dest_user: "{{ bundle.dest_user }}"
-            add_certificates_bundle_dest_group: "{{ bundle.dest_group }}"
-            add_certificates_bundle_dest_mode: "{{ bundle.dest_mode }}"
+            add_certificates__bundle_name: "{{ bundle.name }}"
+            add_certificates__bundle_type: "{{ bundle.type }}"
+            add_certificates__bundle_src: "{{ bundle.src }}"
+            add_certificates__bundle_dest: "{{ bundle.dest }}"
+            add_certificates__bundle_src_user: "{{ bundle.src_user }}"
+            add_certificates__bundle_src_password: "{{ bundle.src_password }}"
+            add_certificates__bundle_dest_user: "{{ bundle.dest_user }}"
+            add_certificates__bundle_dest_group: "{{ bundle.dest_group }}"
+            add_certificates__bundle_dest_mode: "{{ bundle.dest_mode }}"
           ansible.builtin.include_role:
             name: "labocbz.add_certificates"
 
@@ -107,14 +107,14 @@
           tags:
             - "labocbz.install_phpmyadmin"
           vars:
-            install_phpmyadmin_blowfish: "{{ inv_install_phpmyadmin_blowfish }}"
-            install_phpmyadmin_install_dir: "{{ inv_install_phpmyadmin_install_dir }}"
-            install_phpmyadmin_tempdir: "{{ inv_install_phpmyadmin_tempdir }}"
-            install_phpmyadmin_ssl_dir: "{{ inv_install_phpmyadmin_ssl_dir }}"
-            install_phpmyadmin_php_version: "{{ inv_install_phpmyadmin_php_version }}"
-            install_phpmyadmin_user: "{{ inv_install_phpmyadmin_user }}"
-            install_phpmyadmin_group: "{{ inv_install_phpmyadmin_group }}"
-            install_phpmyadmin_dbservers: "{{ inv_install_phpmyadmin_dbservers }}"
+            install_phpmyadmin__blowfish: "{{ inv_install_phpmyadmin__blowfish }}"
+            install_phpmyadmin__install_dir: "{{ inv_install_phpmyadmin__install_dir }}"
+            install_phpmyadmin__tempdir: "{{ inv_install_phpmyadmin__tempdir }}"
+            install_phpmyadmin__ssl_dir: "{{ inv_install_phpmyadmin__ssl_dir }}"
+            install_phpmyadmin__php_version: "{{ inv_install_phpmyadmin__php_version }}"
+            install_phpmyadmin__user: "{{ inv_install_phpmyadmin__user }}"
+            install_phpmyadmin__group: "{{ inv_install_phpmyadmin__group }}"
+            install_phpmyadmin__dbservers: "{{ inv_install_phpmyadmin__dbservers }}"
           ansible.builtin.include_role:
             name: "labocbz.install_phpmyadmin"
 
@@ -125,27 +125,27 @@
           tags:
             - "labocbz.prepare_host"
           vars:
-            prepare_host_system_users: "{{ inv_prepare_host_apache_system_users }}"
+            prepare_host__system_users: "{{ inv_prepare_host__apache_system_users }}"
           ansible.builtin.include_role:
             name: "labocbz.prepare_host"
 
         - name: "Include labocbz.add_certificates"
           tags:
             - "labocbz.add_certificates"
-          loop: "{{ inv_add_apache_confs_configurations_cert_bundles }}"
+          loop: "{{ inv_add_apache_confs__configurations_cert_bundles }}"
           loop_control:
             loop_var: bundle
-          when: inv_add_apache_confs_configurations_cert_bundles is defined
+          when: inv_add_apache_confs__configurations_cert_bundles is defined
           vars:
-            add_certificates_bundle_name: "{{ bundle.name }}"
-            add_certificates_bundle_type: "{{ bundle.type }}"
-            add_certificates_bundle_src: "{{ bundle.src }}"
-            add_certificates_bundle_dest: "{{ bundle.dest }}"
-            add_certificates_bundle_src_user: "{{ bundle.src_user }}"
-            add_certificates_bundle_src_password: "{{ bundle.src_password }}"
-            add_certificates_bundle_dest_user: "{{ bundle.dest_user }}"
-            add_certificates_bundle_dest_group: "{{ bundle.dest_group }}"
-            add_certificates_bundle_dest_mode: "{{ bundle.dest_mode }}"
+            add_certificates__bundle_name: "{{ bundle.name }}"
+            add_certificates__bundle_type: "{{ bundle.type }}"
+            add_certificates__bundle_src: "{{ bundle.src }}"
+            add_certificates__bundle_dest: "{{ bundle.dest }}"
+            add_certificates__bundle_src_user: "{{ bundle.src_user }}"
+            add_certificates__bundle_src_password: "{{ bundle.src_password }}"
+            add_certificates__bundle_dest_user: "{{ bundle.dest_user }}"
+            add_certificates__bundle_dest_group: "{{ bundle.dest_group }}"
+            add_certificates__bundle_dest_mode: "{{ bundle.dest_mode }}"
           ansible.builtin.include_role:
             name: "labocbz.add_certificates"
 
@@ -153,18 +153,18 @@
           tags:
             - "labocbz.install_apache"
           vars:
-            install_apache_https_listen_port: "{{ inv_install_apache_https_listen_port }}"
-            install_apache_http_listen_port: "{{ inv_install_apache_http_listen_port }}"
-            install_apache_modules: "{{ inv_install_apache_modules }}"
-            install_apache_enable_qos: "{{ inv_install_apache_enable_qos }}"
-            install_apache_enable_security: "{{ inv_install_apache_enable_security }}"
-            install_apache_security_core_version: "{{ inv_install_apache_security_core_version }}"
-            install_apache_remove_all_vhosts: "{{ inv_install_apache_remove_all_vhosts }}"
-            install_apache_loglevel: "{{ inv_install_apache_loglevel }}"
-            install_apache_security_version: "{{ inv_install_apache_security_version }}"
-            install_apache_enable_evasive: "{{ inv_install_apache_enable_evasive }}"
-            install_apache_enable_pagespeed: "{{ inv_install_apache_enable_pagespeed }}"
-            install_apache_enable_prefork: "{{ inv_install_apache_enable_prefork }}"
+            install_apache__https_listen_port: "{{ inv_install_apache__https_listen_port }}"
+            install_apache__http_listen_port: "{{ inv_install_apache__http_listen_port }}"
+            install_apache__modules: "{{ inv_install_apache__modules }}"
+            install_apache__enable_qos: "{{ inv_install_apache__enable_qos }}"
+            install_apache__enable_security: "{{ inv_install_apache__enable_security }}"
+            install_apache__security_core_version: "{{ inv_install_apache__security_core_version }}"
+            install_apache__remove_all_vhosts: "{{ inv_install_apache__remove_all_vhosts }}"
+            install_apache__loglevel: "{{ inv_install_apache__loglevel }}"
+            install_apache__security_version: "{{ inv_install_apache__security_version }}"
+            install_apache__enable_evasive: "{{ inv_install_apache__enable_evasive }}"
+            install_apache__enable_pagespeed: "{{ inv_install_apache__enable_pagespeed }}"
+            install_apache__enable_prefork: "{{ inv_install_apache__enable_prefork }}"
           ansible.builtin.include_role:
             name: "labocbz.install_apache"
 
@@ -181,20 +181,20 @@
           tags:
             - "labocbz.add_apache_confs"
           vars:
-            add_apache_confs_http_listen_port: "{{ inv_add_apache_confs_http_listen_port }}"
-            add_apache_confs_https_listen_port: "{{ inv_add_apache_confs_https_listen_port }}"
-            add_apache_confs_ldap_url: "{{ inv_add_apache_confs_ldap_url }}"
-            add_apache_confs_ldap_port: "{{ inv_add_apache_confs_ldap_port }}"
-            add_apache_confs_ldap_dc: "{{ inv_add_apache_confs_ldap_dc }}"
-            add_apache_confs_auth_ldap_url: "{{ inv_add_apache_confs_auth_ldap_url }}"
-            add_apache_confs_custom_ldap_base_header: "{{ inv_add_apache_confs_custom_ldap_base_header }}"
-            add_apache_confs_webmaster: "{{ inv_add_apache_confs_webmaster }}"
-            add_apache_confs_request_body: "{{ inv_add_apache_confs_request_body }}"
-            add_apache_confs_security_body_limit: "{{ inv_add_apache_confs_security_body_limit }}"
-            add_apache_confs_ssl_files_path: "{{ inv_add_apache_confs_ssl_files_path }}"
-            add_apache_confs_conf_path: "{{ inv_add_apache_confs_conf_path }}"
-            add_apache_confs_base_document_root: "{{ inv_add_apache_confs_base_document_root }}"
-            add_apache_confs_configurations: "{{ inv_add_apache_confs_configurations }}"
+            add_apache_confs__http_listen_port: "{{ inv_add_apache_confs__http_listen_port }}"
+            add_apache_confs__https_listen_port: "{{ inv_add_apache_confs__https_listen_port }}"
+            add_apache_confs__ldap_url: "{{ inv_add_apache_confs__ldap_url }}"
+            add_apache_confs__ldap_port: "{{ inv_add_apache_confs__ldap_port }}"
+            add_apache_confs__ldap_dc: "{{ inv_add_apache_confs__ldap_dc }}"
+            add_apache_confs__auth_ldap_url: "{{ inv_add_apache_confs__auth_ldap_url }}"
+            add_apache_confs__custom_ldap_base_header: "{{ inv_add_apache_confs__custom_ldap_base_header }}"
+            add_apache_confs__webmaster: "{{ inv_add_apache_confs__webmaster }}"
+            add_apache_confs__request_body: "{{ inv_add_apache_confs__request_body }}"
+            add_apache_confs__security_body_limit: "{{ inv_add_apache_confs__security_body_limit }}"
+            add_apache_confs__ssl_files_path: "{{ inv_add_apache_confs__ssl_files_path }}"
+            add_apache_confs__conf_path: "{{ inv_add_apache_confs__conf_path }}"
+            add_apache_confs__base_document_root: "{{ inv_add_apache_confs__base_document_root }}"
+            add_apache_confs__configurations: "{{ inv_add_apache_confs__configurations }}"
           ansible.builtin.include_role:
             name: "labocbz.add_apache_confs"
 
@@ -202,6 +202,6 @@
           tags:
             - "labocbz.add_logrotate_confs"
           vars:
-            logrotate_configurations: "{{ inv_logrotate_apache_configurations }}"
+            add_logrotate_confs__files: "{{ inv_add_logrotate_confs__apache_configurations }}"
           ansible.builtin.include_role:
             name: "labocbz.add_logrotate_confs"
