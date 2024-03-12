@@ -1,6 +1,6 @@
 ---
 - name: "labocbz.prepare_host"
-  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-deploy-phpmyadmin.git"
+  src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Prepare-Host.git"
 
 - name: "labocbz.add_certificates"
   src: "https://github.com/CBZ-D-velop/Ansible-Role-Labocbz-Add-Certificates.git"
