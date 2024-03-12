@@ -3,5 +3,5 @@
   tags:
       - "labocbz.deploy_phpmyadmin"
   vars:
-    tower_env: "local"
+    tower_env: "cicd-ubuntu-22"
   ansible.builtin.import_playbook: "../../playbook.yml"
