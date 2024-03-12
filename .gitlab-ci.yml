@@ -52,8 +52,8 @@ variables:
     - "[ -f \"./molecule/$SCENARIO/requirements.yml\" ] && ansible-galaxy install -r ./molecule/$SCENARIO/requirements.yml --roles-path=./molecule/$SCENARIO/roles"
     # Fix for J2
     - "[ -f \"./molecule/$SCENARIO/requirements.yml\" ] && ansible-galaxy install -r ./molecule/$SCENARIO/requirements.yml --roles-path=./roles"
-    - "[ -f \"./molecule/$SCENARIO/requirements.yml\" ] && cp ./molecule/$SCENARIO/templates/* ./molecule/$SCENARIO/roles/*/templates/"
-    - "[ -f \"./molecule/$SCENARIO/requirements.yml\" ] && cp ./molecule/$SCENARIO/templates/* ./roles/*/templates/"
+    - cp ./molecule/$SCENARIO/templates/* ./molecule/$SCENARIO/roles/labocbz.add_apache_confs/templates/"
+    - cp ./molecule/$SCENARIO/templates/* ./roles/labocbz.add_apache_confs/templates/"
   script:
     - "molecule test --scenario-name $SCENARIO"
   allow_failure: false
