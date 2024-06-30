@@ -34,7 +34,7 @@ However, it's important to note that this playbook doesn't cover the installatio
 
 ## Deployment diagramm
 
-![](./assets/Ansible-Playbook-Labocbz-Deploy-PhpMyAdmin.drawio.svg)
+![Ansible-Playbook-Labocbz-Deploy-PhpMyAdmin](./assets/Ansible-Playbook-Labocbz-Deploy-PhpMyAdmin.drawio.svg)
 
 Above, we can observe a potential deployment utilizing this playbook. It showcases the PhpMyAdmin system, consisting of multiple components distributed across 3 different hosts. Among these hosts, 2 out of 3 contain Redis and Mariadb services. It's essential to highlight that the playbook requires the presence of an administrative account to create the database and user for PhpMyAdmin. However, the creation of this user and database is managed by the playbook.
 
@@ -49,7 +49,6 @@ Please note that these components can be installed on the same machine. For furt
 You have to run multiples tests. *tests with an # are mandatory*
 
 ```MARKDOWN
-# lint
 # syntax
 # converge
 # idempotence
@@ -74,7 +73,6 @@ yamllint -c ./.yamllint .
 ansible-lint --config=./.ansible-lint .
 
 # Execute and test your playbook
-molecule lint
 molecule create
 molecule list
 molecule converge
@@ -103,7 +101,8 @@ To install this playbook, just copy/import this playbook or raw file into your f
 ```YAML
 # From AWX / Tower
 ---
-tower_env: "local"
+tower_temp: true
+#tower_env: "all"
 
 ```
 
@@ -137,6 +136,14 @@ Here you can put your change to keep a trace of your work and decisions.
 * Refacto of the playbook
 * Added latest versions
 * Tested and validated on Debian 11/12 and Ubuntu 22
+
+### 2024-05-19: New CI
+
+* Added Markdown lint to the CICD
+* Rework all Docker images
+* Change CICD vars convention
+* New workers
+* Removed all automation based on branch
 
 ## Authors
 
